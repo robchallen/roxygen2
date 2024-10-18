@@ -87,8 +87,8 @@ merge.rd_section_inherit_section <- function(x, y, ...) {
   rd_section_inherit_section(c(x$value$source, y$value$source), c(x$value$title, y$value$title))
 }
 
-# set recurse to true to make it default of @inheritDotParams (and @interitAllDotParams)
-rd_section_inherit_dot_params <- function(source, args, recurse = FALSE) {
+# set recurse to true to make it default of @inheritDotParams (and @inheritAllDotParams)
+rd_section_inherit_dot_params <- function(source, args, recurse = TRUE) {
   stopifnot(is.character(source), is.character(args))
   stopifnot(length(source) == length(args))
 
