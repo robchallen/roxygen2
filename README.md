@@ -6,7 +6,14 @@
 [![Codecov test coverage](https://codecov.io/gh/r-lib/roxygen2/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/roxygen2?branch=main)
 <!-- badges: end -->
 
-The premise of roxygen2 is simple: describe your functions in comments next to their definitions and roxygen2 will process your source code and comments to automatically generate `.Rd` files in `man/`, `NAMESPACE`, and, if needed, the `Collate` field in `DESCRIPTION`.
+The premise of `roxygen2` is simple: describe your functions in comments next to
+their definitions and `roxygen2` will process your source code and comments to
+automatically generate `.Rd` files in `man/`, `NAMESPACE`, and, if needed, the
+`Collate` field in `DESCRIPTION`.
+
+This version of `roxygen2` is a fork of the original which fixes some issues and 
+supports recursive inheritance of dot parameters, allowing for more detailed
+information about parameters that can be passed through to underlying functions.
 
 ## Installation 
 
@@ -21,7 +28,11 @@ pak::pak("r-lib/roxygen2")
 
 ## Usage
 
-The premise of roxygen2 is simple: describe your functions in comments next to their definitions and roxygen2 will process your source code and comments to produce Rd files in the `man/` directory.  Here's a [simple example](https://stringr.tidyverse.org/reference/str_length.html) from the stringr package:
+The premise of roxygen2 is simple: describe your functions in comments next to
+their definitions and roxygen2 will process your source code and comments to
+produce Rd files in the `man/` directory.  Here's a [simple
+example](https://stringr.tidyverse.org/reference/str_length.html) from the
+`stringr` package:
 
 ```R
 #' The length of a string
@@ -45,20 +56,27 @@ str_length <- function(string) {
 }
 ```
 
-When you `roxygenise()` (or `devtools::document()`) your package these comments will be automatically transformed to the `.Rd` that R uses to generate the documentation you see when you type `?str_length`. 
+When you `roxygenise()` (or `devtools::document()`) your package these comments
+will be automatically transformed to the `.Rd` that R uses to generate the
+documentation you see when you type `?str_length`.
 
 ## Learn more
 
-To get started, first read `vignette("roxygen2")`. Then read more about the specific package component that you want to generate:
+To get started, first read `vignette("roxygen2")`. Then read more about the
+specific package component that you want to generate:
 
 * Start with `vignette("rd")` to learn how document your functions with roxygen2.
 
-* `vignette("rd-other")` discusses how to document other things like datasets, the package itself, and the various pieces used by R's OOP systems.
+* `vignette("rd-other")` discusses how to document other things like datasets, 
+the package itself, and the various pieces used by R's OOP systems.
 
 * `vignette("rd-formatting")` gives the details of roxygen2's rmarkdown support.
 
-* `vignette("reuse")` demonstrates the tools available to reuse documentation in multiple places.
+* `vignette("reuse")` demonstrates the tools available to reuse documentation in 
+multiple places.
 
-* `vignette("namespace")` describes how to generate a `NAMESPACE` file, how namespacing works in R, and how you can use roxygen2 to be specific about what your package needs and supplies.
+* `vignette("namespace")` describes how to generate a `NAMESPACE` file, how 
+namespacing works in R, and how you can use roxygen2 to be 
+specific about what your package needs and supplies.
 
 * For the `Collate` field in the `DESCRIPTION`, see `?update_collate()`.

@@ -255,7 +255,7 @@ inherit_dot_params <- function(topic, topics, env) {
 
   } else {
 
-    # Transitive inheritance of paramater documentation
+    # Transitive inheritance of parameter documentation
     # Basically this looks into parent documentation
     # and finds anything that has not been documented already
 
@@ -263,7 +263,7 @@ inherit_dot_params <- function(topic, topics, env) {
     dests = map_chr(sources, resolve_qualified_link)
     defined_params = get_documented_params(topic)
 
-    # docs is a complex list of stuff. within it we need to find stuff that
+    # docs is a complex list. within it we need to find things that
     # we have not already documented. We have to match by name with the
     # complication that the names might be vectors themselves
 
