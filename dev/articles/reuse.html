@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">roxygen2</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">7.3.2.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">7.3.2.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -315,7 +315,7 @@ argument with this name, its documentation will never be inherited.</p>
 <h3 id="multiple-parameters">Multiple parameters<a class="anchor" aria-label="anchor" href="#multiple-parameters"></a>
 </h3>
 <p>Sometimes you document two (or more) tightly coupled parameters
-together. For example, <code>dplyr::left_join()</code> has:</p>
+together. For example, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code> has:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @param x,y A pair of data frames, data frame extensions (e.g. a tibble), or</span></span>
 <span><span class="co">#'   lazy data frames (e.g. from dbplyr or dtplyr). See *Methods*, below, for</span></span>
@@ -332,7 +332,7 @@ documented by the inheriting function.</p>
 <p>Many tidyverse functions that accept named arguments in
 <code>...</code> also use a <code>.</code> prefix for their own
 arguments. This reduces the risk of an argument going to the wrong
-place. For example, <code>dplyr::mutate()</code> has <code>.by</code>,
+place. For example, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code> has <code>.by</code>,
 <code>.keep</code>, <code>.before</code>, and <code>.after</code>
 arguments, because if they didn’t have that prefix, you wouldn’t be able
 to create new variables called <code>by</code>, <code>keep</code>,
@@ -385,7 +385,7 @@ have two components: the function to inherit from and the arguments to
 inherit. Since you’ll typically only want to document the most important
 arguments, <code>@inheritDotParams</code> comes with a flexible
 specification for argument selection inspired by
-<code>dplyr::select()</code>:</p>
+<code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>:</p>
 <ul>
 <li>
 <code>@inheritDotParams foo</code> takes all parameters from
