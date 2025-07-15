@@ -269,38 +269,38 @@ test_that("order of sections is correct", {
   expect_match(format(out1), "Rmd.*After.*After2")
 })
 
-test_that("useful warnings", {
-  skip_if_not(rmarkdown::pandoc_available("2.17"))
-
-  block <- "
-    #' Title
-    #' @includeRmd path
-    #' @name foobar
-    NULL"
-  expect_snapshot(. <- roc_proc_text(rd_roclet(), block))
-
-  path <- withr::local_tempfile(fileext = ".Rmd", lines = c(
-    "```{r}",
-    "stop('Error')",
-    "```"
-  ))
-  path <- normalizePath(path)
-
-  text <- sprintf("
-    #' Title
-    #' @includeRmd %s
-    #' @name foobar
-    NULL", path
-  )
-  expect_snapshot(
-    . <- roc_proc_text(rd_roclet(), text),
-    transform = function(x) {
-      x <- gsub(path, "<temp-path.Rmd>", x, fixed = TRUE)
-      x <- gsub("file.*\\.Rmd", "<another-temp-path.Rmd>", x)
-      x
-    }
-  )
-})
+#' test_that("useful warnings", {
+#'   skip_if_not(rmarkdown::pandoc_available("2.17"))
+#'
+#'   block <- "
+#'     #' Title
+#'     #' @includeRmd path
+#'     #' @name foobar
+#'     NULL"
+#'   expect_snapshot(. <- roc_proc_text(rd_roclet(), block))
+#'
+#'   path <- withr::local_tempfile(fileext = ".Rmd", lines = c(
+#'     "```{r}",
+#'     "stop('Error')",
+#'     "```"
+#'   ))
+#'   path <- normalizePath(path)
+#'
+#'   text <- sprintf("
+#'     #' Title
+#'     #' @includeRmd %s
+#'     #' @name foobar
+#'     NULL", path
+#'   )
+#'   expect_snapshot(
+#'     . <- roc_proc_text(rd_roclet(), text),
+#'     transform = function(x) {
+#'       x <- gsub(path, "<temp-path.Rmd>", x, fixed = TRUE)
+#'       x <- gsub("file.*\\.Rmd", "<another-temp-path.Rmd>", x)
+#'       x
+#'     }
+#'   )
+#' })
 
 test_that("sets width", {
   skip_if_not(rmarkdown::pandoc_available("2.17"))

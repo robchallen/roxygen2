@@ -32,7 +32,7 @@ test_that("inheritDotParams inherits `...` parameters from parent", {
 
 })
 
-test_that("inheritDotParams inherits `...` parameters from mulitple parents including from dplyr", {
+test_that("inheritDotParams inherits `...` parameters from multiple parents including from dplyr", {
   out <- roc_proc_text(rd_roclet(), "
     #' Bar
     #'

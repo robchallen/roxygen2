@@ -57,12 +57,14 @@
 
     \arguments{
     \item{...}{
-      Arguments passed on to \code{\link[=foo]{foo}}, \code{\link[=bar]{bar}}
-      \describe{
+      Named arguments passed on to \code{\link[=foo]{foo}}\describe{
         \item{\code{x}}{x}
-        \item{\code{y}}{y1}
-        \item{\code{z}}{z}
-      }}
+    \item{\code{y}}{y1}
+    }
+      Named arguments passed on to \code{\link[=bar]{bar}}\describe{
+        \item{\code{y}}{y2}
+    \item{\code{z}}{z}
+    }}
     } 
 
 # useful error for bad inherits

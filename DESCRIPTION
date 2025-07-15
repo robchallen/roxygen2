@@ -41,7 +41,8 @@ Suggests:
     R.oo,
     rmarkdown (>= 2.16),
     testthat (>= 3.1.2),
-    yaml
+    yaml,
+    dplyr
 LinkingTo: 
     cpp11
 VignetteBuilder: 
@@ -53,4 +54,4 @@ Config/testthat/parallel: TRUE
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE, load = "installed")
-RoxygenNote: 7.3.2.9001
+RoxygenNote: 7.3.2.9004
