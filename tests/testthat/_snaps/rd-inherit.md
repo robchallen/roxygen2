@@ -37,13 +37,6 @@
     Message
       x In topic 'b': @inheritSection failed to find section "A" in topic a.
 
-# warned if no params need documentation
-
-    Code
-      . <- roc_proc_text(rd_roclet(), code)
-    Message
-      i @inheritParams: All parameters are already documented; none remain to be inherited.
-
 # can inherit all from single function
 
     [1] "test-rd-inherit-dots.txt"
