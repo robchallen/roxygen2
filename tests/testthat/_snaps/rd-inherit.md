@@ -42,8 +42,7 @@
     Code
       . <- roc_proc_text(rd_roclet(), code)
     Message
-      x In topic 'x': @inheritParams failed.
-      i All parameters are already documented; none remain to be inherited.
+      i @inheritParams: All parameters are already documented; none remain to be inherited.
 
 # can inherit all from single function
 
