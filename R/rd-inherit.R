@@ -155,9 +155,15 @@ topics_process_inherit <- function(topics, env) {
   topics$topo_apply(function(x) x$inherits_section_from(), inherit_section)
   topics$topo_apply(inherits("sections"), inherit_sections)
 
-  topics$topo_apply(inherits("params"), inherit_params)
-  # Can't inherit ... into ... so can do in any order
+  # topics$topo_apply(inherits("params"), inherit_params)
+
+  # inheriting ... into ... so must do target ... inherits before parameter
+  # inheritance, otherwise inherited `...` are not picked up.
+  # If there is a cycle in inheritance bad things will happen
+  # most likely.
+  # browser()
   topics$apply(inherit_dot_params, env = env)
+  topics$topo_apply(inherits("params"), inherit_params)
 
   invisible()
 }
@@ -174,12 +180,12 @@ inherit_params <- function(topic, topics) {
   needed <- topic$get_value("formals")
   missing <- setdiff(needed, documented)
   if (length(missing) == 0) {
-    warn_roxy_topic(
-      topic$get_name(),
-      c(
-        i = "@inheritParams: All parameters are already documented; none remain to be inherited."
-      )
-    )
+    # warn_roxy_topic(
+    #   topic$get_name(),
+    #   c(
+    #     i = "@inheritParams: All parameters are already documented; none remain to be inherited."
+    #   )
+    # )
     return()
   }
 
