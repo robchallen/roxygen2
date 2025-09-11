@@ -26,7 +26,11 @@ roxy_tag_parse.roxy_tag_inheritDotParams <- function(x) {
 }
 #' @export
 roxy_tag_rd.roxy_tag_inheritDotParams <- function(x, base_path, env) {
-  rd_section_inherit_dot_params(x$val$name, x$val$description)
+  rd_section_inherit_dot_params(
+    x$val$name,
+    x$val$description,
+    recurse = !getOption("roxygen.legacy_inherit_dots", FALSE)
+  )
 }
 
 # Fix for issues #1670 and #1671 by implementing a new tag for backward compatibility.
@@ -103,7 +107,7 @@ merge.rd_section_inherit_section <- function(x, y, ...) {
 }
 
 # set recurse to true to make it default of @inheritDotParams (and @inheritAllDotParams)
-rd_section_inherit_dot_params <- function(source, args, recurse = TRUE) {
+rd_section_inherit_dot_params <- function(source, args, recurse) {
   stopifnot(is.character(source), is.character(args))
   stopifnot(length(source) == length(args))
 
@@ -241,23 +245,24 @@ inherit_dot_params <- function(topic, topics, env) {
   funs <- lapply(inheritors$source, function(x) {
     eval(parse(text = x), envir = env)
   })
-  args <- map2(funs, inheritors$args, select_args_text, topic = topic)
+
   # Then pull out the ones we need
   docs <- lapply(inheritors$source, find_params, topics = topics)
-
-  # process extra parameters to @inheritDotParams
-  arg_matches <- function(args, docs) {
-    match <- map_lgl(docs, function(x) all(x$name %in% args))
-    matched <- docs[match]
-    setNames(
-      lapply(matched, "[[", "value"),
-      map_chr(matched, function(x) paste(x$name, collapse = ","))
-    )
-  }
 
   if (!inheritors$recurse) {
     # Original behaviour, with output modified to prevent empty blocks.
     # names(docs_selected) is the list of inherited parameters that are to be inherited
+    args <- map2(funs, inheritors$args, select_args_text, topic = topic)
+    # process extra parameters to @inheritDotParams
+    arg_matches <- function(args, docs) {
+      match <- map_lgl(docs, function(x) all(x$name %in% args))
+      matched <- docs[match]
+      setNames(
+        lapply(matched, "[[", "value"),
+        map_chr(matched, function(x) paste(x$name, collapse = ","))
+      )
+    }
+
     docs_selected <- unlist(map2(args, docs, arg_matches))
 
     # Only document params under "..." that aren't otherwise documented
@@ -321,17 +326,42 @@ inherit_dot_params <- function(topic, topics, env) {
     dots_rd = character()
 
     for (doc in docs) {
-      arg = args[[i]]
       source = sources[[i]]
       dest = dests[[i]]
+      # The parameters provided to the @inheritAllDotParams argument
+      inheritParams = unlist(strsplit(inheritors$args[[i]], "\\s+"))
+      # The parameters starting with "-"
+      removeParams = substr(
+        inheritParams[substr(inheritParams, 1, 1) == "-"],
+        2,
+        1000
+      )
+      # The parameters not starting with "-" or all of the
+      # documented parameters in this RD. (this can include S3 specific
+      # documentation in things like dply::mutate)
+      keepParams = inheritParams[substr(inheritParams, 1, 1) != "-"]
+      if (length(keepParams) == 0) {
+        keepParams = unlist(sapply(doc, function(x) x$name))
+        if (length(setdiff(removeParams, keepParams)) > 0) {
+          warn_roxy_topic(
+            topic$get_name(),
+            sprintf(
+              "@inheritsDotsParam refers to unknown variables: %s",
+              paste0(setdiff(removeParams, keepParams), collapse = ", ")
+            )
+          )
+        }
+      }
+
+      keepParams = setdiff(keepParams, removeParams)
+      keepParams = setdiff(keepParams, defined_params)
 
       # source_entries = list()
       doc_rd = character()
       for (entry in doc) {
         # extras are the documented entries that are not already defined
         # entry$name can be multiple names
-        extras = entry$name[!entry$name %in% defined_params]
-        extras = extras[extras %in% c(arg, "...")]
+        extras = entry$name[entry$name %in% keepParams]
         if (length(extras) > 0) {
           # keep the documentation for these extra parameters
           # this is formatted as a csv for ease

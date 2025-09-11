@@ -686,28 +686,31 @@ test_that("does not produce multiple ... args", {
 })
 
 test_that("can inherit dots from several functions", {
-  out <- roc_proc_text(
-    rd_roclet(),
+  withr::with_options(
+    list(roxygen.legacy_inherit_dots = TRUE),
+    out <- roc_proc_text(
+      rd_roclet(),
+      "
+      #' Foo
+      #'
+      #' @param x x
+      #' @param y y1
+      foo <- function(x, y) {}
+
+      #' Bar
+      #'
+      #' @param y y2
+      #' @param z z
+      bar <- function(y, z) {}
+
+      #' Foobar
+      #'
+      #' @inheritDotParams foo
+      #' @inheritDotParams bar
+      foobar <- function(...) {}
     "
-    #' Foo
-    #'
-    #' @param x x
-    #' @param y y1
-    foo <- function(x, y) {}
-
-    #' Bar
-    #'
-    #' @param y y2
-    #' @param z z
-    bar <- function(z) {}
-
-    #' Foobar
-    #'
-    #' @inheritDotParams foo
-    #' @inheritDotParams bar
-    foobar <- function(...) {}
-  "
-  )[[3]]
+    )[[3]]
+  )
 
   expect_snapshot_output(out$get_section("param"))
 })
@@ -757,7 +760,12 @@ test_that("useful error for bad inherits", {
     #' @inheritDotParams foo -z
     bar <- function(...) {}
   "
-  expect_snapshot(. <- roc_proc_text(rd_roclet(), text))
+  withr::with_options(
+    list(roxygen.legacy_inherit_dots = TRUE),
+    expect_snapshot(
+      . <- roc_proc_text(rd_roclet(), text)
+    )
+  )
 })
 
 

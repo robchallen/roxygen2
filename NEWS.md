@@ -1,5 +1,12 @@
 # roxygen2 (development version)
 
+# roxygen2 7.3.2.9006
+
+* @InheritAllDotParams recursive behaviour made default (can be disabled with
+  `options(roxygen.legacy_inherit_dots=TRUE)` to restore old behaviour.
+
+* Fixes for CRAN warnings for empty Roxygen blocks.
+
 * Package documentation now converts ROR IDs into a useful link (#1698, @maelle).
 
 * The check for unexported S3 methods was improved, so it does not hang any more
