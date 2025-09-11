@@ -7,7 +7,6 @@
       Caused by error:
       ! multi-line `r ` markup is not supported
 
-
 # inline code gives useful warning
 
     Code
