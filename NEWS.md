@@ -6,6 +6,7 @@
   `options(roxygen.legacy_inherit_dots=TRUE)` to restore old behaviour.
 
 * Fixes for CRAN warnings for empty Roxygen blocks.
+# roxygen2 7.3.3
 
 * Package documentation now converts ROR IDs into a useful link (#1698, @maelle).
 
