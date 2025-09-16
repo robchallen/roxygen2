@@ -1,11 +1,15 @@
 # roxygen2 (development version)
 
-# roxygen2 7.3.2.9006
+# roxygen2 7.3.2.9007
+
+* Fixed error reporting bug in `rd_inherit` due to no source topic name passed to error 
+  function.
 
 * @InheritAllDotParams recursive behaviour made default (can be disabled with
   `options(roxygen.legacy_inherit_dots=TRUE)` to restore old behaviour.
 
 * Fixes for CRAN warnings for empty Roxygen blocks.
+
 # roxygen2 7.3.3
 
 * Package documentation now converts ROR IDs into a useful link (#1698, @maelle).

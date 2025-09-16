@@ -247,7 +247,12 @@ inherit_dot_params <- function(topic, topics, env) {
   })
 
   # Then pull out the ones we need
-  docs <- lapply(inheritors$source, find_params, topics = topics)
+  docs <- lapply(
+    inheritors$source,
+    find_params,
+    topics = topics,
+    source = topic$get_name()
+  )
 
   if (!inheritors$recurse) {
     # Original behaviour, with output modified to prevent empty blocks.
